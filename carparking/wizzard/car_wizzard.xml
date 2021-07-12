@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+
+    <record id="car_wizard_action" model="ir.actions.act_window">
+        <field name="name">Add Horse Power For Actual Car</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">car.wizzard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <record id="car_change_horse_power_wizzard" model="ir.ui.view">
+        <field name="name">car.wizzard.form</field>
+        <field name="model">car.wizzard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="horse_power_plus"/>
+                </group>
+                <footer>
+                    <button string="Confirm" name="add_horse_power" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+
+
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="wizard_action"
+                name="Car Wizard"
+                binding_model="car.car"
+                res_model="car.wizzard"
+                view_mode="form"
+                target="new"
+    />
+
+</odoo>

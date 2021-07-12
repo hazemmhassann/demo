@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+
+    <record id="sale_order_inherit" model="ir.ui.view">
+        <field name="name">sale order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="patient_name"/>
+            </field>
+        </field>
+
+    </record>
+
+
+    <!--form view-->
+    <record model="ir.ui.view" id="hospital_patient_type_form">
+        <field name="model">hospital.patient</field>
+        <field name="name">Hospital Patient Form</field>
+        <field name="arch" type="xml">
+            <form string="New User Form">
+                <header>
+                    <button name="%(om_ho.create_appointment_wizard)d" string="Create Appointment"
+                            type="action" class="oe_highlight" context="{'default_patient_idd': active_id}"/>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_patient_appointments"
+                                type="object" class="oe_stat_button" icon="fa-calendar">
+                            <field name="appointment_count" widget="statinfo"/>
+
+
+                        </button>
+                        <button name="toggle_active" type="object"
+
+                                class="oe_stat_button" icon="fa-archive">
+
+                            <field name="active" widget="boolean_button"
+
+                                   options='{"terminology": "archive"}'/>
+
+                        </button>
+
+
+                    </div>
+
+                    <field name="image" widget="image" class="oe_avatar"/>
+
+
+                    <group>
+                        <group string="User Info">
+                            <field name="patient_name"/>
+                            <field name="patient_age"/>
+                            <field name="patient_weight"/>
+                            <field name="name_seq"/>
+
+
+                        </group>
+                        <group string="Notes">
+
+                            <field name="notes"/>
+                            <field name="age_group"/>
+                            <field name="gender"/>
+                            <!--                            <field name="age_group"/>-->
+
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+
+
+            </form>
+        </field>
+    </record>
+
+
+    <record id="patient_search" model="ir.ui.view">
+        <field name="name">hospital</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <search string="Patients">
+                <field name="patient_name"
+                       filter_domain="['|',('patient_name', 'ilike', self), ('name_seq', 'ilike', self)]"/>
+                <field name="notes"/>
+                <separator/>
+                <filter string="Male" name="male" domain="[('gender', '=', 'male')]"/>
+                <filter string="Female" name="female" domain="[('gender', '=', 'female')]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Gender" name="gender" context="{'group_by':'gender'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--tree view-->
+    <record model="ir.ui.view" id="hospital_patient_type_tree">
+        <field name="model">hospital.patient</field>
+        <field name="name">Hospital Patient Tree</field>
+        <field name="arch" type="xml">
+            <tree string="New User Form">
+
+                <field name="name_seq"/>
+                <field name="patient_name"/>
+                <field name="patient_age"/>
+                <field name="patient_weight"/>
+                <field name="age_group"/>
+
+                <field name="gender"/>
+                <!--                <field name="age_group"/>-->
+
+
+                <field name="image"/>
+                <field name="notes"/>
+            </tree>
+        </field>
+    </record>
+
+    // action for create new patient
+    <record id="action_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{"search_default_male":1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Patient!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="hospital_root" web_icon="om_ho,static/description/icon.png" name="Hospital" sequence="0"/>
+    <menuitem id="hospital_patient" name="Patient" parent="hospital_root" action="action_patient"/>
+</odoo>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="appointment_type_form">
+        <field name="model">hospital.appointment</field>
+        <field name="name">Hospital Appointment</field>
+        <field name="arch" type="xml">
+            <form string="New User Appointment">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" states="draft" class="oe_highlight"/>
+                    <button name="action_done" type="object" string="Done" states="confirm" class="oe_highlight"/>
+                    <button name="delete_lines" type="object" string="Delete"  class="oe_highlight"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Appointment Info">
+                        <field name="name_seq"/>
+                        <field name="patient_id"/>
+                        <field name="gender"/>
+                        <field name="patient_age"/>
+                        <field name="appointment_date"/>
+                        <field name="notes"/>
+                    </group>
+                    <notebook>
+                        <page string="Doctor Prescription">
+                            <field name="appointment_lines">
+                                <tree>
+                                    <field name="product_id"/>
+                                    <field name="product_qty"/>
+                                    <field name="appointment_id" invisible="1"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="product_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="product_qty"/>
+                                        </group>
+                                    </group>
+
+                                </form>
+                            </field>
+
+                        </page>
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="appointment_type_tree">
+        <field name="model">hospital.appointment</field>
+        <field name="name">Hospital Patient Tree</field>
+        <field name="arch" type="xml">
+            <tree string="New User Form">
+                <!--                <field name="name_seq"/>-->
+                <field name="name_seq"/>
+                <field name="patient_id"/>
+                <field name="gender"/>
+                <field name="patient_age"/>
+                <field name="appointment_date"/>
+                <field name="notes"/>
+            </tree>
+        </field>
+    </record>
+
+    // action for create new patient
+    <record id="action_appointment" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Appointment!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="hospital_appointment" name="Appointments" parent="hospital_root"
+              action="action_appointment" sequence="30"/>
+</odoo>

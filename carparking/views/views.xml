@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="carparking.list">
+      <field name="name">carparking list</field>
+      <field name="model">carparking.carparking</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="carparking.action_window">
+      <field name="name">carparking window</field>
+      <field name="res_model">carparking.carparking</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="carparking.action_server">
+      <field name="name">carparking server</field>
+      <field name="model_id" ref="model_carparking_carparking"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="carparking" id="carparking.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="carparking.menu_1" parent="carparking.menu_root"/>
+    <menuitem name="Menu 2" id="carparking.menu_2" parent="carparking.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="carparking.menu_1_list" parent="carparking.menu_1"
+              action="carparking.action_window"/>
+    <menuitem name="Server to list" id="carparking" parent="carparking.menu_2"
+              action="carparking.action_server"/>
+-->
+  </data>
+</odoo>
